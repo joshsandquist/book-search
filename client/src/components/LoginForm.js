@@ -43,7 +43,7 @@ const LoginForm = () => {
       const { data } = await login({
         variables: { ...userFormData }
       });
-
+      // Log in user and save token to local storage
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);

@@ -1,4 +1,5 @@
 import React from 'react';
+//importing needed apollo client dependencies
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,14 +12,17 @@ import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
-
+// creating link for Apollo client and setting it to graphQL endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+// authLink will include token
 const authLink = setContext((_, { headers }) => {
+  //grabbing token from local storage
   const token = localStorage.getItem('id_token');
   return {
+    // include the token in authorization header if it exists
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
@@ -26,11 +30,15 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+//creating Apollo client instance
 const client = new ApolloClient({
+  //combining auth and htttp links
   link: authLink.concat(httpLink),
+  // make a memory cche for data
   cache: new InMemoryCache(),
 });
 
+//Wrapping the app with out apollo client 
 function App() {
   return (
     <ApolloProvider client={client}>
