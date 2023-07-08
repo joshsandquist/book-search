@@ -2,7 +2,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
-const bcrypt = require('bcrypt')
+
 
 const resolvers = {
     Query: {
@@ -27,7 +27,7 @@ const resolvers = {
             throw new AuthenticationError('Incorrect credentials');
           }
     
-          const correctPw = await bcrypt.compare(password, user.password);
+          const correctPw = await user.isCorrectPassword(password);
     
           if (!correctPw) {
             throw new AuthenticationError('Incorrect credentials');
