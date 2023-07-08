@@ -14,7 +14,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 //Adding mutation to component
   const [addUser, { error, data }] = useMutation(ADD_USER);
-// Importing react useEffect for error handling
+// Importing react useEffect for error handling for debugging
   useEffect(() => {
     if (error) {
       setShowAlert(true);
@@ -40,9 +40,13 @@ const SignupForm = () => {
     }
     // Replaced RESTful addUser function with addUser GQL mutation
     try {
+
       const { data } = await addUser({
+        //taking in userFormData as variable for our mutation
         variables: { ...userFormData },
       });
+
+      //Loggin in user and sroting token to logalstorage from Auth file
       Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
