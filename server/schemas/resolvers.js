@@ -74,14 +74,18 @@ const resolvers = {
     
           throw new AuthenticationError('You need to be logged in!');
         },
+        //mutation to remove book from user savedBooks array
         removeBook: async (parent, { bookId }, context) => {
+    
           if (context.user) {
             const updatedUser = await User.findOneAndUpdate(
               { _id: context.user._id },
+              // using mongoose $pull method to remove book with specified id from the array
               { $pull: { savedBooks: { bookId } } },
+              //return updated data
               { new: true }
             );
-                
+
             return updatedUser;
           }
     
