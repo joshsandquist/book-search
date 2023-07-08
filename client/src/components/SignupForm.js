@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+//importing GraphQL mutation
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -11,9 +12,9 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-
+//Adding mutation to component
   const [addUser, { error, data }] = useMutation(ADD_USER);
-
+// Importing react useEffect for error handling
   useEffect(() => {
     if (error) {
       setShowAlert(true);
@@ -37,7 +38,7 @@ const SignupForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    // Replaced RESTful addUser function with addUser GQL mutation
     try {
       const { data } = await addUser({
         variables: { ...userFormData },
