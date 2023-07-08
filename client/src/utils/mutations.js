@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-
+// Client side mutations that will be executed within our components
 export const LOGIN_USER = gql`
   mutation login(
     $email: String!, $password: String!) 
